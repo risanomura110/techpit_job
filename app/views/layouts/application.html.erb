@@ -3,12 +3,30 @@
   <head>
     <title>TechpitJob</title>
     <%= csrf_meta_tags %>
-
+    <%# <%= csp_meta_tag %> 
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+  <nav class="navbar navbar-expand-lg bg-2 navbar-light header">
+    <div class="container">
+      <a class="navbar-brand" href="/jobs">Techpit Job</a>
+      <% if user_signed_in? %>
+      <div class="my-2 my-lg-0">
+          <!-- ========== link_toメソッドを使ってログアウト用のリンクを用意 ========== -->
+          <%= link_to 'ログアウト', destroy_user_session_path, class: "no-text-decoration", method: :delete %>
+        </div>
+      <% end %>
+    </div>
+  </nav>
+
+
+
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
     <%= yield %>
   </body>
 </html>
