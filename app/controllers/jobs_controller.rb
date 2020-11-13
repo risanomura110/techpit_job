@@ -2,6 +2,8 @@ class JobsController < ApplicationController
   before_action :authenticate_user!, except: :show #この一行を追加
 
   def index
+    @jobs = Job.all.includes(:user).where(user_id: current_user.id) #この一行を追加：user_idがcurrent_user.idのJobを取得
+    @entries = Entry.all.includes(:user,:job) #この一行を追加：Entryを取得
   end
   def new
     @job = Job.new
@@ -61,6 +63,8 @@ class JobsController < ApplicationController
 
   def show
     @job = Job.find(params[:id])
+    @entries = Entry.where(job_id:@job) #この一行を追加
+
 
   end
 

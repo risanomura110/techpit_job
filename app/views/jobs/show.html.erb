@@ -39,6 +39,15 @@
                 <h2 class="job-list-title">応募一覧</h2>
                 <ul class="list-group">
                   <%# ========== 後ほど応募情報を表示するところ ========== %>
+                  <% @entries.each do |entry| %>
+    <li class="list-group-item">
+        <div><%= entry.user.email %>　<small class="text-muted"><%= entry.created_at.strftime('%Y/%m/%d %H:%M') %></small></div>
+        <div class="list-group-item-comment">
+            <%= entry.messages %>
+        </div>
+    </li>
+<% end %>
+
                 </ul>
               </div>
            <% else -%> <!-- ④：自分の作成した求人でない場合 -->
@@ -47,8 +56,20 @@
               <a href="javascript:void(0)" class="btn btn-xl">すでに応募しています</a>
             </div>
             <% else %><!-- ⑤まだ応募していない場合 -->
+            <%= form_with model: [@job, @job.entries.new] do |f| %>
+    <%= f.hidden_field :job_id, value: @job.id %>
+    <div class="form-group form-message">
+        <label for="exampleInputMessage">メッセージ（任意）</label>
+        <%= f.text_area :messages , class: "form-control", placeholder: "例：興味あります。よければDMでご連絡お待ちしております。" %>
+    </div>
+    <div class="intro-button text-center">
+         <%= f.submit "応募する", class: "btn btn-xl" %>
+        </div>
+<% end %>
+
             <%# ========== 後ほど応募フォームを表示するところ ========== %>
-            <% end %><!-- ⑤ -->
+            <% end %>
+
            <% end %><!-- ④ -->
 
     <% else %><!-- ③：ログインしていない場合 -->
